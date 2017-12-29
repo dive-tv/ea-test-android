@@ -1,0 +1,1 @@
+-keep class sdk.client.dive.tv.rest.DefaultApiWrapper.class
