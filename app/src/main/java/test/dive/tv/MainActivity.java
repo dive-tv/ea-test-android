@@ -65,7 +65,7 @@ public class MainActivity extends DiveActivity implements DiveActivity.OnDiveInt
         btnResume.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendResume(Integer.valueOf(edtResumeTime.getText().toString()));
+                sendResume(Integer.valueOf(edtResumeTime.getText().toString().equals("")?"0":edtResumeTime.getText().toString()));
             }
         });
         btnStop.setOnClickListener(new View.OnClickListener() {
@@ -81,7 +81,7 @@ public class MainActivity extends DiveActivity implements DiveActivity.OnDiveInt
         dive = new DiveSdk();
         String apiKey = null;
         try {
-            apiKey = test.dive.tv.Utils.getProperty("api.key", getApplicationContext());
+             apiKey = test.dive.tv.Utils.getProperty("api.key", getApplicationContext());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -111,11 +111,11 @@ public class MainActivity extends DiveActivity implements DiveActivity.OnDiveInt
 
     @Override
     public void onDiveClose() {
-        flyDive.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void onShowProducts() {
-
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                flyDive.setVisibility(View.GONE);
+            }
+        });
     }
 }
