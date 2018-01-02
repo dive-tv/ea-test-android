@@ -25,4 +25,5 @@
     <string name="dive_pause">PAUSE</string>
     <string name="dive_resume">RESUME</string>
     <string name="dive_stop">STOP</string>
+    <string name="dive_seek">SEEK</string>
 </resources>

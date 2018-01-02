@@ -32,8 +32,8 @@ public class MainActivity extends DiveActivity implements DiveActivity.OnDiveInt
     private String deviceId;
     private Fragment diveFragment;
     private FrameLayout flyDive;
-    private EditText edtMovieTime, edtResumeTime;
-    private Button btnPlay, btnPause, btnResume, btnStop;
+    private EditText edtMovieTime, edtResumeTime, edtSeekTime;
+    private Button btnPlay, btnPause, btnResume, btnSeek, btnStop;
     private FragmentManager mManager = null;
 
 
@@ -44,16 +44,18 @@ public class MainActivity extends DiveActivity implements DiveActivity.OnDiveInt
         flyDive = (FrameLayout) findViewById(R.id.dive_view);
         edtMovieTime = (EditText) findViewById(R.id.edt_timestamp);
         edtResumeTime = (EditText) findViewById(R.id.edt_resume_timestamp);
+        edtSeekTime = (EditText) findViewById(R.id.edt_seek_timestamp);
         btnPlay = (Button) findViewById(R.id.btn_play);
         btnPause = (Button) findViewById(R.id.btn_pause);
         btnResume = (Button) findViewById(R.id.btn_resume);
+        btnSeek = (Button) findViewById(R.id.btn_seek);
         btnStop = (Button) findViewById(R.id.btn_stop);
 
         btnPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 flyDive.setVisibility(View.VISIBLE);
-                addDive("m00001", Integer.valueOf(edtMovieTime.getText().toString()));
+                addDive("m00001", Integer.valueOf(edtMovieTime.getText().toString().isEmpty() ? "0" : edtMovieTime.getText().toString()));
             }
         });
         btnPause.setOnClickListener(new View.OnClickListener() {
@@ -65,7 +67,13 @@ public class MainActivity extends DiveActivity implements DiveActivity.OnDiveInt
         btnResume.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendResume(Integer.valueOf(edtResumeTime.getText().toString().equals("")?"0":edtResumeTime.getText().toString()));
+                sendResume(Integer.valueOf(edtResumeTime.getText().toString().isEmpty() ? "0" : edtResumeTime.getText().toString()));
+            }
+        });
+        btnSeek.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendSeek(Integer.valueOf(edtSeekTime.getText().toString().isEmpty() ? "0" : edtSeekTime.getText().toString()));
             }
         });
         btnStop.setOnClickListener(new View.OnClickListener() {
@@ -81,7 +89,7 @@ public class MainActivity extends DiveActivity implements DiveActivity.OnDiveInt
         dive = new DiveSdk();
         String apiKey = null;
         try {
-             apiKey = test.dive.tv.Utils.getProperty("api.key", getApplicationContext());
+            apiKey = test.dive.tv.Utils.getProperty("api.key", getApplicationContext());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -103,6 +111,10 @@ public class MainActivity extends DiveActivity implements DiveActivity.OnDiveInt
 
     public void sendResume(int timestamp) {
         dive.vodResume(timestamp);
+    }
+
+    public void sendSeek(int timestamp) {
+        dive.vodSeek(timestamp);
     }
 
     public void sendStop() {
