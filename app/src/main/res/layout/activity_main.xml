@@ -12,6 +12,32 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <RadioGroup
+            android:id="@+id/rgr_movies"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/rbtn_sact2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/satc2" />
+
+            <RadioButton
+                android:id="@+id/rbtn_spider"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/spider" />
+
+            <RadioButton
+                android:id="@+id/rbtn_bigbang"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/bigbang" />
+        </RadioGroup>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -21,8 +47,8 @@
                 android:id="@+id/edt_timestamp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="number"
-                android:hint="@string/movie_time" />
+                android:hint="@string/movie_time"
+                android:inputType="number" />
 
             <Button
                 android:id="@+id/btn_play"
@@ -46,8 +72,8 @@
                 android:id="@+id/edt_resume_timestamp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="number"
-                android:hint="@string/movie_time" />
+                android:hint="@string/movie_time"
+                android:inputType="number" />
 
             <Button
                 android:id="@+id/btn_resume"
@@ -65,8 +91,8 @@
                 android:id="@+id/edt_seek_timestamp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="number"
-                android:hint="@string/movie_time" />
+                android:hint="@string/movie_time"
+                android:inputType="number" />
 
             <Button
                 android:id="@+id/btn_seek"
@@ -83,15 +109,13 @@
 
     </LinearLayout>
 
-
-
     <FrameLayout
         android:id="@+id/dive_view"
         android:layout_width="match_parent"
         android:layout_height="217dp"
         android:layout_alignParentBottom="true"
         android:background="@android:color/transparent"
+        android:visibility="gone"
         tools:ignore="MergeRootFrame"
-        tools:layout_editor_absoluteX="0dp"
-        android:visibility="gone"/>
+        tools:layout_editor_absoluteX="0dp" />
 </RelativeLayout>

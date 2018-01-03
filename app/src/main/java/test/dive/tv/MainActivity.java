@@ -18,20 +18,28 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.RadioGroup;
 
+import java.util.Arrays;
+import java.util.List;
+
+import sdk.client.dive.tv.rest.callbacks.ClientCallback;
+import sdk.client.dive.tv.rest.enums.RestAPIError;
 import sdk.dive.tv.ui.DiveSdk;
 import sdk.dive.tv.ui.Utils;
 import sdk.dive.tv.ui.activities.DiveActivity;
 
 public class MainActivity extends DiveActivity implements DiveActivity.OnDiveInteractionListener {
     private DiveSdk dive;
-    private String deviceId;
+    private String deviceId, movieSelected = "m00001";
     private Fragment diveFragment;
     private FrameLayout flyDive;
+    private RadioGroup rgrMovies;
     private EditText edtMovieTime, edtResumeTime, edtSeekTime;
     private Button btnPlay, btnPause, btnResume, btnSeek, btnStop;
     private FragmentManager mManager = null;
@@ -42,6 +50,7 @@ public class MainActivity extends DiveActivity implements DiveActivity.OnDiveInt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         flyDive = (FrameLayout) findViewById(R.id.dive_view);
+        rgrMovies = (RadioGroup) findViewById(R.id.rgr_movies);
         edtMovieTime = (EditText) findViewById(R.id.edt_timestamp);
         edtResumeTime = (EditText) findViewById(R.id.edt_resume_timestamp);
         edtSeekTime = (EditText) findViewById(R.id.edt_seek_timestamp);
@@ -51,17 +60,34 @@ public class MainActivity extends DiveActivity implements DiveActivity.OnDiveInt
         btnSeek = (Button) findViewById(R.id.btn_seek);
         btnStop = (Button) findViewById(R.id.btn_stop);
 
+        rgrMovies.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId){
+                    case R.id.rbtn_sact2:
+                        movieSelected = "m00001";
+                        break;
+                    case R.id.rbtn_spider:
+                        movieSelected = "m00002";
+                        break;
+                    case R.id.rbtn_bigbang:
+                        movieSelected = "s0001e001";
+                        break;
+                }
+            }
+        });
+
         btnPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 flyDive.setVisibility(View.VISIBLE);
-                addDive("m00001", Integer.valueOf(edtMovieTime.getText().toString().isEmpty() ? "0" : edtMovieTime.getText().toString()));
+                checkMovie(movieSelected);
             }
         });
         btnPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendPause(Integer.valueOf(edtMovieTime.getText().toString()));
+                sendPause();
             }
         });
         btnResume.setOnClickListener(new View.OnClickListener() {
@@ -96,6 +122,25 @@ public class MainActivity extends DiveActivity implements DiveActivity.OnDiveInt
         dive.initialize(deviceId, apiKey, getApplicationContext());
     }
 
+    public void checkMovie(final String movieId){
+        ClientCallback callback = new ClientCallback() {
+            @Override
+            public void onFailure(RestAPIError message) {
+                Log.e("MOVIE ", movieId + "NOT AVAILABLE");
+                onDiveClose();
+            }
+
+            @Override
+            public void onSuccess(Object result) {
+                addDive(movieId, Integer.valueOf(edtMovieTime.getText().toString().isEmpty() ? "0" : edtMovieTime.getText().toString()));
+
+            }
+        };
+        List<String> channels = Arrays.asList(movieId);;
+        dive.VODIsAvailable(channels, callback);
+    }
+
+
     public void addDive(String movieId, int timestamp) {
         diveFragment = dive.VODStart(movieId, timestamp);
 
@@ -105,8 +150,8 @@ public class MainActivity extends DiveActivity implements DiveActivity.OnDiveInt
                 .commit();
     }
 
-    public void sendPause(int timestamp) {
-        dive.vodPause(timestamp);
+    public void sendPause() {
+        dive.vodPause();
     }
 
     public void sendResume(int timestamp) {
