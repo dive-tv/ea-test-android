@@ -25,6 +25,8 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.RadioGroup;
 
+import com.touchvie.sdk.model.MovieStatus;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -63,7 +65,7 @@ public class MainActivity extends DiveActivity implements DiveActivity.OnDiveInt
         rgrMovies.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId){
+                switch (checkedId) {
                     case R.id.rbtn_sact2:
                         movieSelected = "m00001";
                         break;
@@ -122,7 +124,7 @@ public class MainActivity extends DiveActivity implements DiveActivity.OnDiveInt
         dive.initialize(deviceId, apiKey, getApplicationContext());
     }
 
-    public void checkMovie(final String movieId){
+    public void checkMovie(final String movieId) {
         ClientCallback callback = new ClientCallback() {
             @Override
             public void onFailure(RestAPIError message) {
@@ -132,12 +134,15 @@ public class MainActivity extends DiveActivity implements DiveActivity.OnDiveInt
 
             @Override
             public void onSuccess(Object result) {
-                addDive(movieId, Integer.valueOf(edtMovieTime.getText().toString().isEmpty() ? "0" : edtMovieTime.getText().toString()));
+                for (MovieStatus movie : (List<MovieStatus>) result) {
+                    if (movie.getReady())
+                        addDive(movieId, Integer.valueOf(edtMovieTime.getText().toString().isEmpty() ? "0" : edtMovieTime.getText().toString()));
+                }
 
             }
         };
-        List<String> channels = Arrays.asList(movieId);;
-        dive.VODIsAvailable(channels, callback);
+        List<String> movie = Arrays.asList(movieId);
+        dive.VODIsAvailable(movie, callback);
     }
 
 
