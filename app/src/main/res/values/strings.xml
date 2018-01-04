@@ -29,4 +29,10 @@
     <string name="satc2">Sexo en Nueva York 2</string>
     <string name="spider">Spider-man</string>
     <string name="bigbang">Big Bang Theory S01E01</string>
+    <string name="dive_tve1">TVE1</string>
+    <string name="dive_tnt">TNT</string>
+    <string name="dive_ms">MOVISTAR SERIES</string>
+    <string name="dive_cc">COMEDY CENTRAL</string>
+    <string name="dive_dive">DIVE SHOWROOM</string>
+    <string name="check_channels">CHECK CHANNELS</string>
 </resources>

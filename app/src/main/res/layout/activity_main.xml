@@ -8,6 +8,7 @@
     android:background="@android:color/black">
 
     <LinearLayout
+        android:id="@+id/vod_controls"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -107,6 +108,62 @@
             android:layout_height="wrap_content"
             android:text="@string/dive_stop" />
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_toEndOf="@id/vod_controls"
+        android:orientation="vertical">
+        <Button
+            android:id="@+id/btn_check_channels"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/check_channels"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_tve1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:text="@string/dive_tve1" />
+
+            <Button
+                android:id="@+id/btn_tnt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:text="@string/dive_tnt" />
+
+            <Button
+                android:id="@+id/btn_ms"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:text="@string/dive_ms" />
+
+            <Button
+                android:id="@+id/btn_cc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:text="@string/dive_cc" />
+
+            <Button
+                android:id="@+id/btn_dive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:text="@string/dive_dive" />
+
+        </LinearLayout>
     </LinearLayout>
 
     <FrameLayout

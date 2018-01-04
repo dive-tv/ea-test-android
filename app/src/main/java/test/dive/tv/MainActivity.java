@@ -25,6 +25,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.RadioGroup;
 
+import com.touchvie.sdk.model.ChannelStatus;
 import com.touchvie.sdk.model.MovieStatus;
 
 import java.util.Arrays;
@@ -43,7 +44,7 @@ public class MainActivity extends DiveActivity implements DiveActivity.OnDiveInt
     private FrameLayout flyDive;
     private RadioGroup rgrMovies;
     private EditText edtMovieTime, edtResumeTime, edtSeekTime;
-    private Button btnPlay, btnPause, btnResume, btnSeek, btnStop;
+    private Button btnPlay, btnPause, btnResume, btnSeek, btnStop, btnCheck, btnTve1, btnTnt, btnMS, btnCC, btnDive;
     private FragmentManager mManager = null;
 
 
@@ -61,6 +62,12 @@ public class MainActivity extends DiveActivity implements DiveActivity.OnDiveInt
         btnResume = (Button) findViewById(R.id.btn_resume);
         btnSeek = (Button) findViewById(R.id.btn_seek);
         btnStop = (Button) findViewById(R.id.btn_stop);
+        btnCheck = (Button) findViewById(R.id.btn_check_channels);
+        btnTve1 = (Button) findViewById(R.id.btn_tve1);
+        btnTnt = (Button) findViewById(R.id.btn_tnt);
+        btnMS = (Button) findViewById(R.id.btn_ms);
+        btnCC = (Button) findViewById(R.id.btn_cc);
+        btnDive = (Button) findViewById(R.id.btn_dive);
 
         rgrMovies.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -110,7 +117,47 @@ public class MainActivity extends DiveActivity implements DiveActivity.OnDiveInt
                 sendStop();
             }
         });
-
+        btnCheck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                flyDive.setVisibility(View.VISIBLE);
+                checkChannels();            }
+        });
+        btnTve1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                flyDive.setVisibility(View.VISIBLE);
+                addDive("tve1");
+            }
+        });
+        btnTnt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                flyDive.setVisibility(View.VISIBLE);
+                addDive("tnt");
+            }
+        });
+        btnMS.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                flyDive.setVisibility(View.VISIBLE);
+                addDive("ms");
+            }
+        });
+        btnCC.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                flyDive.setVisibility(View.VISIBLE);
+                addDive("cc");
+            }
+        });
+        btnDive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                flyDive.setVisibility(View.VISIBLE);
+                addDive("dive");
+            }
+        });
         mManager = getSupportFragmentManager();
         super.setListener(this);
         deviceId = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
@@ -153,6 +200,62 @@ public class MainActivity extends DiveActivity implements DiveActivity.OnDiveInt
                 .replace(R.id.dive_view, diveFragment, Utils.FragmentNames.DIVE.name())
                 .addToBackStack(Utils.FragmentNames.DIVE.name())
                 .commit();
+    }
+
+    public void checkChannels(){
+        ClientCallback callback = new ClientCallback() {
+            @Override
+            public void onFailure(RestAPIError message) {
+                Log.e("CHANNELS: ", "NOT AVAILABLE");
+                onDiveClose();
+            }
+
+            @Override
+            public void onSuccess(Object result) {
+                final List<ChannelStatus> channels = (List<ChannelStatus>) result;
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        setEnabledButtons(channels);
+                    }
+                });
+            }
+        };
+        List<String> channels = Arrays.asList("tve1", "tnt", "ms", "cc", "dive");
+
+        dive.channelIsAvailable(channels, callback);
+    }
+
+
+    public void addDive(String channelId) {
+        diveFragment = dive.tvStart(channelId);
+
+        mManager.beginTransaction()
+                .replace(R.id.dive_view, diveFragment, Utils.FragmentNames.DIVE.name())
+                .addToBackStack(Utils.FragmentNames.DIVE.name())
+                .commit();
+    }
+
+    public void setEnabledButtons(List<ChannelStatus> channels){
+        for (ChannelStatus channel:channels) {
+            switch (channel.getChannelId()) {
+                case "tve1":
+                    btnTve1.setEnabled(channel.getReady());
+                    break;
+                case "tnt":
+                    btnTnt.setEnabled(channel.getReady());
+                    break;
+                case "ms":
+                    btnMS.setEnabled(channel.getReady());
+                    break;
+                case "cc":
+                    btnCC.setEnabled(channel.getReady());
+                    break;
+                case "dive":
+                    btnDive.setEnabled(channel.getReady());
+                    break;
+            }
+        }
     }
 
     public void sendPause() {
