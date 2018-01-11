@@ -20,11 +20,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 
 import com.touchvie.sdk.model.ChannelStatus;
 import com.touchvie.sdk.model.MovieStatus;
@@ -89,6 +91,7 @@ public class MainActivity extends DiveActivity implements DiveActivity.OnDiveInt
                         movieSelected = "s0001e001";
                         break;
                 }
+                onDiveMaximize();
             }
         });
 
@@ -97,6 +100,7 @@ public class MainActivity extends DiveActivity implements DiveActivity.OnDiveInt
             public void onClick(View v) {
                 flyDive.setVisibility(View.VISIBLE);
                 checkMovie(movieSelected);
+                onDiveMaximize();
             }
         });
         btnPause.setOnClickListener(new View.OnClickListener() {
@@ -109,12 +113,14 @@ public class MainActivity extends DiveActivity implements DiveActivity.OnDiveInt
             @Override
             public void onClick(View v) {
                 sendResume(Integer.valueOf(edtResumeTime.getText().toString().isEmpty() ? "0" : edtResumeTime.getText().toString()));
+                onDiveMaximize();
             }
         });
         btnSeek.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 sendSeek(Integer.valueOf(edtSeekTime.getText().toString().isEmpty() ? "0" : edtSeekTime.getText().toString()));
+                onDiveMaximize();
             }
         });
         btnStop.setOnClickListener(new View.OnClickListener() {
@@ -127,13 +133,16 @@ public class MainActivity extends DiveActivity implements DiveActivity.OnDiveInt
             @Override
             public void onClick(View v) {
                 flyDive.setVisibility(View.VISIBLE);
-                checkChannels();            }
+                checkChannels();
+                onDiveMaximize();
+            }
         });
         btnTve1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 flyDive.setVisibility(View.VISIBLE);
                 addDive("tve1");
+                onDiveMaximize();
             }
         });
         btnTnt.setOnClickListener(new View.OnClickListener() {
@@ -141,6 +150,7 @@ public class MainActivity extends DiveActivity implements DiveActivity.OnDiveInt
             public void onClick(View v) {
                 flyDive.setVisibility(View.VISIBLE);
                 addDive("tnt");
+                onDiveMaximize();
             }
         });
         btnMS.setOnClickListener(new View.OnClickListener() {
@@ -148,6 +158,7 @@ public class MainActivity extends DiveActivity implements DiveActivity.OnDiveInt
             public void onClick(View v) {
                 flyDive.setVisibility(View.VISIBLE);
                 addDive("ms");
+                onDiveMaximize();
             }
         });
         btnCC.setOnClickListener(new View.OnClickListener() {
@@ -155,6 +166,7 @@ public class MainActivity extends DiveActivity implements DiveActivity.OnDiveInt
             public void onClick(View v) {
                 flyDive.setVisibility(View.VISIBLE);
                 addDive("cc");
+                onDiveMaximize();
             }
         });
         btnNeox.setOnClickListener(new View.OnClickListener() {
@@ -162,6 +174,7 @@ public class MainActivity extends DiveActivity implements DiveActivity.OnDiveInt
             public void onClick(View v) {
                 flyDive.setVisibility(View.VISIBLE);
                 addDive("neox");
+                onDiveMaximize();
             }
         });
         btnMe.setOnClickListener(new View.OnClickListener() {
@@ -169,6 +182,7 @@ public class MainActivity extends DiveActivity implements DiveActivity.OnDiveInt
             public void onClick(View v) {
                 flyDive.setVisibility(View.VISIBLE);
                 addDive("me");
+                onDiveMaximize();
             }
         });
         mManager = getSupportFragmentManager();
@@ -290,6 +304,13 @@ public class MainActivity extends DiveActivity implements DiveActivity.OnDiveInt
         dive.vodEnd();
     }
 
+    public void onDiveMaximize() {
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.dive_height));
+        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM,RelativeLayout.TRUE);
+
+        flyDive.setLayoutParams(layoutParams);
+    }
+
     @Override
     public void onDiveClose() {
         runOnUiThread(new Runnable() {
@@ -299,4 +320,10 @@ public class MainActivity extends DiveActivity implements DiveActivity.OnDiveInt
             }
         });
     }
+
+    @Override
+    public void onDiveMinimize() {
+        flyDive.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0));
+    }
+
 }
