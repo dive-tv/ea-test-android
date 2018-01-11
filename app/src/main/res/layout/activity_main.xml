@@ -157,11 +157,18 @@
                 android:text="@string/dive_cc" />
 
             <Button
-                android:id="@+id/btn_dive"
+                android:id="@+id/btn_neox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:enabled="false"
-                android:text="@string/dive_dive" />
+                android:text="@string/dive_neox" />
+
+            <Button
+                android:id="@+id/btn_me"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:text="@string/dive_me" />
 
         </LinearLayout>
     </LinearLayout>

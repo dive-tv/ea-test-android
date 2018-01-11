@@ -33,6 +33,7 @@
     <string name="dive_tnt">TNT</string>
     <string name="dive_ms">MOVISTAR SERIES</string>
     <string name="dive_cc">COMEDY CENTRAL</string>
-    <string name="dive_dive">DIVE SHOWROOM</string>
+    <string name="dive_neox">NEOX</string>
+    <string name="dive_me">MOVISTAR ESTRENOS</string>
     <string name="check_channels">CHECK CHANNELS</string>
 </resources>
