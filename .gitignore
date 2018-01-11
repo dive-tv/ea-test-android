@@ -55,3 +55,4 @@ freeline/
 freeline_project_description.json
 
 app/src/main/assets/app\.properties
+app/prod/release/output.json
