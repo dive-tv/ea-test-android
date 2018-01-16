@@ -20,13 +20,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
 
 import com.touchvie.sdk.model.ChannelStatus;
 import com.touchvie.sdk.model.MovieStatus;
@@ -50,6 +48,7 @@ public class MainActivity extends DiveActivity implements DiveActivity.OnDiveInt
     private EditText edtMovieTime, edtResumeTime, edtSeekTime;
     private Button btnPlay, btnPause, btnResume, btnSeek, btnStop, btnCheck, btnTve1, btnTnt, btnMS, btnCC, btnNeox, btnMe;
     private FragmentManager mManager = null;
+    private boolean isMinimize;
 
 
     @Override
@@ -248,7 +247,7 @@ public class MainActivity extends DiveActivity implements DiveActivity.OnDiveInt
                 });
             }
         };
-        List<String> channels = Arrays.asList("tve1", "tnt", "ms", "cc", "dive");
+        List<String> channels = Arrays.asList("tve1", "tnt", "ms", "cc", "neox", "me");
 
         dive.channelIsAvailable(channels, callback);
     }
@@ -305,25 +304,26 @@ public class MainActivity extends DiveActivity implements DiveActivity.OnDiveInt
     }
 
     public void onDiveMaximize() {
-        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.dive_height));
-        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM,RelativeLayout.TRUE);
-
-        flyDive.setLayoutParams(layoutParams);
+        if (isMinimize) {
+            isMinimize = false;
+            flyDive.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
     public void onDiveClose() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                flyDive.setVisibility(View.GONE);
-            }
-        });
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    flyDive.setVisibility(View.GONE);
+                }
+            });
     }
 
     @Override
     public void onDiveMinimize() {
-        flyDive.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0));
+        isMinimize = true;
+        flyDive.setVisibility(View.GONE);
     }
 
 }
