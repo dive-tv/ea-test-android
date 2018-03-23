@@ -46,7 +46,7 @@ public class MainActivity extends DiveActivity implements DiveActivity.OnDiveInt
     private RadioGroup rgrMovies;
     private RadioButton rbtnSact, rbtnSpider, rbtnBigbang;
     private EditText edtMovieTime, edtResumeTime, edtSeekTime;
-    private Button btnPlay, btnPause, btnResume, btnSeek, btnStop, btnCheck, btnTve1, btnTnt, btnMS, btnCC, btnNeox, btnMe;
+    private Button btnPlay, btnPause, btnResume, btnSeek, btnStop, btnCheck, btnTve1, btnTnt, btnMS, btnCC, btnNeox, btnDive;
     private FragmentManager mManager = null;
 
 
@@ -73,7 +73,7 @@ public class MainActivity extends DiveActivity implements DiveActivity.OnDiveInt
         btnMS = (Button) findViewById(R.id.btn_ms);
         btnCC = (Button) findViewById(R.id.btn_cc);
         btnNeox = (Button) findViewById(R.id.btn_neox);
-        btnMe = (Button) findViewById(R.id.btn_me);
+        btnDive = (Button) findViewById(R.id.btn_dive);
 
         rgrMovies.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -164,11 +164,11 @@ public class MainActivity extends DiveActivity implements DiveActivity.OnDiveInt
                 addDive("neox");
             }
         });
-        btnMe.setOnClickListener(new View.OnClickListener() {
+        btnDive.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 flyDive.setVisibility(View.VISIBLE);
-                addDive("me");
+                addDive("dive");
             }
         });
         mManager = getSupportFragmentManager();
@@ -234,7 +234,7 @@ public class MainActivity extends DiveActivity implements DiveActivity.OnDiveInt
                 });
             }
         };
-        List<String> channels = Arrays.asList("tve1", "tnt", "ms", "cc", "dive");
+        List<String> channels = Arrays.asList("tve1", "tnt", "ms", "cc", "neox", "dive");
 
         dive.channelIsAvailable(channels, callback);
     }
@@ -267,8 +267,8 @@ public class MainActivity extends DiveActivity implements DiveActivity.OnDiveInt
                 case "neox":
                     btnNeox.setEnabled(channel.getReady());
                     break;
-                case "me":
-                    btnMe.setEnabled(channel.getReady());
+                case "dive":
+                    btnDive.setEnabled(channel.getReady());
                     break;
             }
         }

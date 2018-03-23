@@ -164,7 +164,7 @@
                 android:text="@string/dive_neox" />
 
             <Button
-                android:id="@+id/btn_me"
+                android:id="@+id/btn_dive"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:enabled="false"
