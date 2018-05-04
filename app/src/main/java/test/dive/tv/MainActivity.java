@@ -46,6 +46,7 @@ public class MainActivity extends DiveActivity implements DiveActivity.OnDiveInt
     private RadioGroup rgrMovies;
     private RadioButton rbtnSact, rbtnSpider, rbtnBigbang;
     private EditText edtMovieTime, edtResumeTime, edtSeekTime;
+    private String style;
     private Button btnPlay, btnPause, btnResume, btnSeek, btnStop, btnCheck, btnTve1, btnTnt, btnMS, btnCC, btnNeox, btnDive;
     private FragmentManager mManager = null;
 
@@ -181,7 +182,47 @@ public class MainActivity extends DiveActivity implements DiveActivity.OnDiveInt
         } catch (Exception e) {
             e.printStackTrace();
         }
-        dive.initialize(deviceId, apiKey, getApplicationContext());
+        style = "[\n" +
+                "  {\n" +
+                "    \"module_name\": \"carousel\",\n" +
+                "    \"styles\": [\n" +
+                "      {\n" +
+                "        \"property\": \"backgroundColor\",\n" +
+                "        \"value\": \"#1c1d1d\"\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"property\": \"backgroundColorNotif\",\n" +
+                "        \"value\": \"#e8ebef\"\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"property\": \"selectedColor\",\n" +
+                "        \"value\": \"#f7d73b\"\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"property\": \"unselectedColor\",\n" +
+                "        \"value\": \"#909090\"\n" +
+                "      }\n" +
+                "    ]\n" +
+                "  },\n" +
+                "  {\n" +
+                "    \"module_name\": \"carddetail\",\n" +
+                "    \"styles\": [\n" +
+                "      {\n" +
+                "        \"property\": \"backgroundColor\",\n" +
+                "        \"value\": \"#1c1d1d\"\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"property\": \"selectedColor\",\n" +
+                "        \"value\": \"#f7d73b\"\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"property\": \"unselectedColor\",\n" +
+                "        \"value\": \"#909090\"\n" +
+                "      }\n" +
+                "    ]\n" +
+                "  }\n" +
+                "]";
+        dive.initialize(deviceId, apiKey, getApplicationContext(),style);
     }
 
     public void checkMovie(final String movieId) {
@@ -298,5 +339,10 @@ public class MainActivity extends DiveActivity implements DiveActivity.OnDiveInt
                 flyDive.setVisibility(View.GONE);
             }
         });
+    }
+
+    @Override
+    public void onDiveMinimize() {
+
     }
 }
