@@ -185,11 +185,10 @@ public class MainActivity extends DiveActivity implements DiveActivity.OnDiveInt
         style = "[\n" +
                 "  {\n" +
                 "    \"module_name\": \"carousel\",\n" +
-                "    \"styles\": [\n" +
-                "      {\n" +
-                "        \"property\": \"backgroundColor\",\n" +
-                "        \"value\": \"#1c1d1d\"\n" +
-                "      },\n" +
+                "    \"styles\": [{\n" +
+                "      \"property\": \"backgroundColor\",\n" +
+                "      \"value\": \"#1c1d1d\"\n" +
+                "    },\n" +
                 "      {\n" +
                 "        \"property\": \"backgroundColorNotif\",\n" +
                 "        \"value\": \"#e8ebef\"\n" +
@@ -201,15 +200,17 @@ public class MainActivity extends DiveActivity implements DiveActivity.OnDiveInt
                 "      {\n" +
                 "        \"property\": \"unselectedColor\",\n" +
                 "        \"value\": \"#909090\"\n" +
-                "      }\n" +
-                "    ]\n" +
+                "      }]\n" +
                 "  },\n" +
                 "  {\n" +
                 "    \"module_name\": \"carddetail\",\n" +
-                "    \"styles\": [\n" +
+                "    \"styles\": [{\n" +
+                "\t  \"property\": \"backgroundColor\",\n" +
+                "\t  \"value\": \"#1c1d1d\"\n" +
+                "\t},\n" +
                 "      {\n" +
-                "        \"property\": \"backgroundColor\",\n" +
-                "        \"value\": \"#1c1d1d\"\n" +
+                "        \"property\": \"backgroundModuleColor\",\n" +
+                "        \"value\": \"#252526\"\n" +
                 "      },\n" +
                 "      {\n" +
                 "        \"property\": \"selectedColor\",\n" +
@@ -218,8 +219,7 @@ public class MainActivity extends DiveActivity implements DiveActivity.OnDiveInt
                 "      {\n" +
                 "        \"property\": \"unselectedColor\",\n" +
                 "        \"value\": \"#909090\"\n" +
-                "      }\n" +
-                "    ]\n" +
+                "      }]\n" +
                 "  }\n" +
                 "]";
         dive.initialize(deviceId, apiKey, getApplicationContext(),style);
