@@ -26,9 +26,11 @@ import android.widget.FrameLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.touchvie.sdk.model.Card;
 import com.touchvie.sdk.model.ChannelStatus;
 import com.touchvie.sdk.model.MovieStatus;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -187,15 +189,15 @@ public class MainActivity extends DiveActivity implements DiveActivity.OnDiveInt
                 "    \"module_name\": \"carousel\",\n" +
                 "    \"styles\": [{\n" +
                 "      \"property\": \"backgroundColor\",\n" +
-                "      \"value\": \"#1c1d1d\"\n" +
+                "      \"value\": \"#401c1d1d\"\n" +
                 "    },\n" +
                 "      {\n" +
                 "        \"property\": \"backgroundColorNotif\",\n" +
-                "        \"value\": \"#e8ebef\"\n" +
+                "        \"value\": \"#40e8ebef\"\n" +
                 "      },\n" +
                 "      {\n" +
                 "        \"property\": \"selectedColor\",\n" +
-                "        \"value\": \"#f7d73b\"\n" +
+                "        \"value\": \"#40f7d73b\"\n" +
                 "      },\n" +
                 "      {\n" +
                 "        \"property\": \"unselectedColor\",\n" +
@@ -206,11 +208,11 @@ public class MainActivity extends DiveActivity implements DiveActivity.OnDiveInt
                 "    \"module_name\": \"carddetail\",\n" +
                 "    \"styles\": [{\n" +
                 "\t  \"property\": \"backgroundColor\",\n" +
-                "\t  \"value\": \"#1c1d1d\"\n" +
+                "\t  \"value\": \"#401c1d1d\"\n" +
                 "\t},\n" +
                 "      {\n" +
                 "        \"property\": \"backgroundModuleColor\",\n" +
-                "        \"value\": \"#252526\"\n" +
+                "        \"value\": \"#40252526\"\n" +
                 "      },\n" +
                 "      {\n" +
                 "        \"property\": \"selectedColor\",\n" +
@@ -222,7 +224,21 @@ public class MainActivity extends DiveActivity implements DiveActivity.OnDiveInt
                 "      }]\n" +
                 "  }\n" +
                 "]";
-        dive.initialize(deviceId, apiKey, getApplicationContext(),style);
+
+        ArrayList<String> categories = new ArrayList<>();
+        categories.add(Card.TypeEnum.PERSON.getValue());
+        categories.add(Card.TypeEnum.CHARACTER.getValue());
+        categories.add(Card.TypeEnum.SONG.getValue());
+        categories.add(Card.TypeEnum.OST.getValue());
+        categories.add(Card.TypeEnum.LOCATION.getValue());
+        categories.add(Card.TypeEnum.TRIVIA.getValue());
+        categories.add(Card.TypeEnum.REFERENCE.getValue());
+        categories.add(Card.TypeEnum.TECHNOLOGY.getValue());
+        categories.add(Card.TypeEnum.VEHICLE.getValue());
+
+        boolean areCategoriesVisibles = false;
+
+        dive.initialize(deviceId, apiKey, getApplicationContext(),style, categories, areCategoriesVisibles);
     }
 
     public void checkMovie(final String movieId) {

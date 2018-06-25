@@ -56,8 +56,8 @@ configurations {
     all*.exclude group: 'com.squareup', module: 'okhttp.okio'
 }
 dependencies {
-    compile 'com.github.dive-tv:ea-front-sdk-android:1.1.37'
-    compile 'com.github.dive-tv:ea-client-sdk-android:1.0.6'
+    compile 'com.github.dive-tv:ea-front-sdk-android:1.2.9'
+    compile 'com.github.dive-tv:ea-client-sdk-android:1.0.8'
     compile 'com.github.dive-tv:sdk-client-java:1.0.6'
     compile 'com.android.support:design:25.4.0'
     compile 'com.android.support:support-v4:25.4.0'
